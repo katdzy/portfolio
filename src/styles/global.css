@@ -1,0 +1,554 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@400;700&display=swap');
+
+/* global.css — Cinematic Prototype Base Styles */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+}
+
+/* Page wrapper fills the full viewport */
+.page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Page label — identification only */
+.page-label {
+  position: relative;
+  z-index: 10;
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #fff;
+  pointer-events: none;
+  /* Push up to avoid overlap with bottom nav */
+  margin-bottom: 80px;
+}
+
+/* -------------------------------------------------- */
+/* VideoBackground                                     */
+/* -------------------------------------------------- */
+.video-background {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+.video-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* GPU compositing hint */
+  will-change: opacity;
+  transform: translateZ(0);
+}
+
+/* -------------------------------------------------- */
+/* PageTransition overlay                              */
+/* -------------------------------------------------- */
+.transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300; /* must be above bottom-nav (200) to block clicks during transition */
+  background: #000;
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity;
+  transform: translateZ(0);
+}
+
+.transition-overlay video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* -------------------------------------------------- */
+/* BottomNav                                           */
+/* -------------------------------------------------- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.bottom-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.bottom-nav a:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.bottom-nav a.active {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: #fff;
+}
+
+/* -------------------------------------------------- */
+/* Home Page                                           */
+/* -------------------------------------------------- */
+.home-page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Avatar circle — top-left, matching Figma */
+.home-avatar {
+  position: absolute;
+  top: 37%;     /* ~399px / 1080px */
+  left: 32px;
+  width: clamp(160px, 29.6vw, 320px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: #e5e7eb;
+  border: 4px solid #d1d5dc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.home-avatar__icon {
+  width: 60%;
+  height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-avatar__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Tagline — right-aligned, ~upper-right area */
+.home-tagline {
+  position: absolute;
+  right: 0;
+  top: 62.8%;   /* ~678px / 1080px */
+  width: clamp(260px, 43.5vw, 835px);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: clamp(13px, 1.25vw, 24px);
+  line-height: 1.35;
+  letter-spacing: -0.013em;
+  color: #fff;
+  text-align: right;
+  padding-right: clamp(16px, 2vw, 40px);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Bottom identity block */
+.home-identity {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.home-nav-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  pointer-events: auto;
+  margin-bottom: 8px; /* Spacing between top row and name */
+}
+
+.home-role {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: clamp(16px, 1.8vw, 32px);
+  letter-spacing: -0.013em;
+  color: #fff;
+  line-height: 1;
+}
+
+.home-nav-row a {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: clamp(14px, 1.4vw, 24px);
+  letter-spacing: -0.013em;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.home-nav-row a:hover {
+  opacity: 0.7;
+}
+
+.home-name {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  /* Scale from ~80px on mobile up to the Figma 167px at 1920px wide */
+  font-size: clamp(52px, 8.72vw, 167px);
+  line-height: 0.85;
+  letter-spacing: -0.02em; /* Tight spacing matches the visual */
+  color: #fff;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------- */
+/* About Page                                          */
+/* -------------------------------------------------- */
+.about-page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Glassmorphism bio card */
+.about-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%); /* shift slightly above true center to leave room for bottom bar */
+  width: min(68vw, 1289px);
+  height: min(48vh, 517px);
+  border-radius: 50px;
+  background: rgba(26, 26, 26, 0.55);
+  backdrop-filter: blur(17.5px);
+  -webkit-backdrop-filter: blur(17.5px);
+  box-shadow:
+    inset 0 0 22px 0 rgba(242, 242, 242, 0.5),
+    inset 0 0 0 1px #999,
+    inset 2px 2px 1px -2px #b3b3b3,
+    inset -2px -2px 1px -2px #b3b3b3,
+    inset 3px 3px 0 -3px rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  align-items: stretch;
+  gap: 32px;
+  padding: 32px 40px;
+  z-index: 10;
+}
+
+.about-card__photo {
+  flex: 0 0 clamp(160px, 22vw, 300px);
+  border-radius: 30px;
+  overflow: hidden;
+  align-self: stretch;
+}
+
+.about-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.about-card__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+}
+
+.about-card__text p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: clamp(13px, 1.25vw, 24px);
+  line-height: 1.65;
+  letter-spacing: -0.021em;
+  color: #fff;
+}
+
+/* Bottom bar — 4-column horizontal layout */
+.about-bottom {
+  position: absolute;
+  bottom: 56px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: clamp(24px, 4vw, 64px);
+  padding: 0 clamp(16px, 3vw, 48px) 0 22px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Col 1 — identity (role + big title) */
+.about-identity {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.about-role {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: clamp(14px, 1.875vw, 36px);
+  letter-spacing: -0.013em;
+  color: #fff;
+  line-height: 1.4;
+}
+
+.about-role.clickable {
+  cursor: pointer;
+  pointer-events: all;
+  transition: opacity 0.2s;
+}
+
+.about-role.clickable:hover {
+  opacity: 0.7;
+}
+
+.about-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: clamp(52px, 8.72vw, 167px);
+  line-height: 0.9;
+  letter-spacing: 0.003em;
+  color: #fff;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+/* Col 2 — subnav links stacked vertically */
+.about-subnav {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-bottom: 10px;
+  pointer-events: all;
+}
+
+.about-subnav a {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: clamp(13px, 1.25vw, 24px);
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: -0.013em;
+  line-height: 1.75;
+  opacity: 0.85;
+}
+
+.about-subnav a:hover {
+  opacity: 1;
+}
+
+/* Cols 3 & 4 — skill columns */
+.about-skills__col {
+  flex: 1;
+  max-width: clamp(180px, 25vw, 472px);
+  padding-bottom: 10px;
+}
+
+.about-skills__col h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: clamp(13px, 1.25vw, 24px);
+  letter-spacing: -0.021em;
+  color: #fff;
+  margin-bottom: 4px;
+  line-height: 1.65;
+}
+
+.about-skills__col p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: clamp(12px, 1.04vw, 20px);
+  letter-spacing: -0.021em;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.65;
+}
+
+/* -------------------------------------------------- */
+/* Contacts Page                                      */
+/* -------------------------------------------------- */
+.contact-container {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* shift slightly above center */
+  width: min(90vw, 832px);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.contact-card {
+  position: relative;
+  isolation: isolate;
+  border-radius: 56px;
+  box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.2);
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 56px;
+  box-shadow: inset 0 0 44px -5px #a3a3a3;
+  background-color: rgba(255, 255, 255, 0);
+  pointer-events: none;
+}
+
+.contact-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  border-radius: 56px;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  filter: url(#glass-distortion);
+  -webkit-filter: url(#glass-distortion);
+  pointer-events: none;
+}
+
+.contact-title {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, 4vw, 58px);
+  color: #fff;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-form-row {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.contact-form-row > * {
+  flex: 1;
+}
+
+.contact-input-wrapper {
+  background: #000000;
+  height: 60px;
+  border-radius: 32px;
+  box-shadow: 0px 4px 12px 0px rgba(13, 10, 44, 0.06);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+}
+
+.contact-input-wrapper input,
+.contact-input-wrapper textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.contact-input-wrapper textarea {
+  height: 100%;
+  padding-top: 18px;
+  resize: none;
+}
+
+.contact-input-wrapper input::placeholder,
+.contact-input-wrapper textarea::placeholder {
+  color: #abb7c2;
+  font-weight: 400;
+}
+
+/* Extra Info underneath */
+.contact-extra-info {
+  margin-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact-extra-info p {
+  color: #d1d5db;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+}
+
+.contact-extra-links {
+  display: flex;
+  gap: 24px;
+}
+
+.contact-extra-links a {
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.contact-extra-links a:hover {
+  border-color: #fff;
+}
