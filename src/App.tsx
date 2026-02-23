@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 import PageTransition from './components/PageTransition.tsx';
+import BottomNav from './components/BottomNav.tsx';
 
 import Home from './pages/Home.tsx';
 import About from './pages/About.tsx';
@@ -28,6 +29,9 @@ export default function App() {
         <Route path="/resume" element={<Resume onNavigate={handleNavigate} />} />
         <Route path="/contacts" element={<Contacts onNavigate={handleNavigate} />} />
       </Routes>
+
+      {/* Mobile/tablet icon bottom nav — hidden on desktop via CSS */}
+      <BottomNav onNavigate={handleNavigate} />
 
       {/* Global transition overlay — always mounted */}
       <PageTransition ref={transitionRef} />

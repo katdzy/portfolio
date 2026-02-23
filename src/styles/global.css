@@ -138,44 +138,46 @@ body,
   overflow: hidden;
 }
 
-/* Avatar circle — top-left, matching Figma */
+/* Avatar circle — bottom-left, just above the identity block */
 .home-avatar {
   position: absolute;
-  top: 37%;
-  /* ~399px / 1080px */
+  /* Anchor from bottom so it always floats just above "Fullstack Developer" */
+  bottom: calc(8% + clamp(130px, 16vh, 210px));
   left: 32px;
-  width: clamp(160px, 29.6vw, 320px);
+  width: clamp(120px, 22vh, 260px);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  background: #e5e7eb;
-  border: 4px solid #d1d5dc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 10;
   overflow: hidden;
+  isolation: isolate;
+  will-change: transform;
 }
 
-.home-avatar__icon {
-  width: 60%;
-  height: 60%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.home-avatar__icon img {
+.home-avatar img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
 }
 
-/* Tagline — right-aligned, ~upper-right area */
-.home-tagline {
+/* Right column — stacks featured card + tagline, anchored top-right above the name */
+.home-right-col {
   position: absolute;
-  right: 0;
-  top: 62.8%;
-  /* ~678px / 1080px */
+  top: clamp(16px, 6vh, 80px);
+  right: clamp(16px, 2.7vw, 52px);
+  bottom: clamp(160px, 26vh, 320px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  z-index: 10;
+  pointer-events: none;
+  gap: clamp(10px, 1.5vh, 22px);
+}
+
+/* Tagline — sits at bottom of right column */
+.home-tagline {
   width: clamp(260px, 43.5vw, 835px);
   font-family: 'Inter', sans-serif;
   font-weight: 400;
@@ -184,9 +186,7 @@ body,
   letter-spacing: -0.013em;
   color: #fff;
   text-align: right;
-  padding-right: clamp(16px, 2vw, 40px);
-  z-index: 10;
-  pointer-events: none;
+  padding-right: 0;
 }
 
 /* Bottom identity block */
@@ -238,14 +238,144 @@ body,
   display: block;
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  /* Scale from ~80px on mobile up to the Figma 167px at 1920px wide */
   font-size: clamp(52px, 8.72vw, 167px);
   line-height: 0.85;
   letter-spacing: -0.02em;
-  /* Tight spacing matches the visual */
   color: #fff;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+/* -------------------------------------------------- */
+/* Home — Featured Project Card                        */
+/* -------------------------------------------------- */
+.home-featured {
+  position: relative;
+  width: clamp(240px, 26vw, 498px);
+  align-self: flex-end;
+  pointer-events: auto;
+  padding: clamp(16px, 1.6vw, 28px) clamp(16px, 1.6vw, 28px);
+  border-radius: clamp(20px, 2.3vw, 45px);
+  isolation: isolate;
+  overflow: hidden;
+  box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 0.8vw, 14px);
+}
+
+.home-featured::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  box-shadow: inset 0 0 44px -5px #a3a3a3;
+  background-color: rgba(255, 255, 255, 0);
+  pointer-events: none;
+}
+
+.home-featured::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  border-radius: inherit;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  pointer-events: none;
+}
+
+.home-featured__label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: clamp(14px, 1.25vw, 24px);
+  color: #fff;
+  letter-spacing: -0.013em;
+}
+
+.home-featured__body {
+  display: flex;
+  gap: clamp(10px, 1vw, 18px);
+  align-items: flex-start;
+}
+
+.home-featured__thumb {
+  width: clamp(80px, 8.1vw, 156px);
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.home-featured__info {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.4vw, 8px);
+  flex: 1;
+}
+
+.home-featured__title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: clamp(13px, 1.1vw, 21px);
+  color: #fff;
+  letter-spacing: -0.013em;
+}
+
+.home-featured__desc {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: clamp(11px, 0.94vw, 18px);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.45;
+  letter-spacing: -0.013em;
+}
+
+.home-featured__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.home-featured__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(11px, 0.99vw, 19px);
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(143.5deg, #000 27%, #666 88%);
+  border-radius: clamp(10px, 1.04vw, 20px);
+  padding: clamp(5px, 0.4vw, 8px) clamp(10px, 1vw, 18px);
+  transition: opacity 0.2s;
+}
+
+.home-featured__btn:hover {
+  opacity: 0.8;
+}
+
+.home-featured__gh-icon {
+  width: clamp(16px, 1.76vw, 34px);
+  height: auto;
+  display: block;
+}
+
+/* Bottom-left footer caption */
+.home-footer-text {
+  position: absolute;
+  bottom: clamp(12px, 1.5vw, 24px);
+  left: 22px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: clamp(12px, 1.25vw, 24px);
+  color: #fff;
+  letter-spacing: -0.013em;
+  z-index: 10;
+  pointer-events: none;
 }
 
 /* -------------------------------------------------- */
@@ -918,4 +1048,403 @@ body,
 
 .contact-extra-links a:hover {
   border-color: #fff;
+}
+
+/* ================================================================== */
+/* RESPONSIVE LAYOUT                                                    */
+/* ================================================================== */
+
+/* ── Z-Index hierarchy (prevents z-fighting) ───────────────────────  */
+/* video-background  : z-index 0                                        */
+/* page content      : z-index 10                                       */
+/* mobile-bottom-nav : z-index 100                                      */
+/* transition-overlay: z-index 300                                      */
+
+/* ── Desktop wrapper: full-size, no overflow ──────────────────────── */
+.home-desktop-layout {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none; /* children opt-in with pointer-events: auto */
+}
+
+/* Mobile layout hidden by default on desktop */
+.home-mobile-layout {
+  display: none;
+}
+
+/* ================================================================== */
+/* Mobile Icon Bottom Nav                                              */
+/* ================================================================== */
+.mobile-bottom-nav {
+  display: none; /* shown only at <=1024px */
+}
+
+/* ================================================================== */
+/* TABLET  768px – 1024px                                             */
+/* ================================================================== */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  /* Show icon nav on tablet */
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    gap: 4px;
+    padding: 10px 18px;
+    background: rgba(26, 26, 26, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 56px;
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.18),
+      0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .mobile-bottom-nav__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 14px;
+    border-radius: 40px;
+    text-decoration: none;
+    transition: background 0.2s;
+    pointer-events: auto;
+  }
+
+  .mobile-bottom-nav__item.active {
+    background: rgba(255,255,255,0.15);
+  }
+
+  .mobile-bottom-nav__icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.75;
+  }
+
+  .mobile-bottom-nav__item.active .mobile-bottom-nav__icon {
+    opacity: 1;
+  }
+
+  .mobile-bottom-nav__label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.02em;
+  }
+
+  .mobile-bottom-nav__item.active .mobile-bottom-nav__label {
+    color: #fff;
+  }
+
+  /* Hide the old desktop bottom-nav on tablet */
+  .bottom-nav { display: none; }
+
+  /* ── Home page tablet adjustments ── */
+  .home-avatar {
+    width: clamp(100px, 16vh, 180px);
+    bottom: calc(8% + clamp(100px, 12vh, 160px));
+  }
+
+  .home-right-col {
+    top: clamp(12px, 4vh, 48px);
+    bottom: clamp(140px, 24vh, 300px);
+    right: 16px;
+    width: clamp(220px, 38vw, 420px);
+  }
+
+  .home-featured {
+    width: 100%;
+  }
+
+  .home-identity {
+    bottom: clamp(80px, 14vh, 160px);
+  }
+
+  .home-name {
+    font-size: clamp(36px, 6.5vw, 90px);
+  }
+
+  .home-nav-row a,
+  .home-role {
+    font-size: clamp(11px, 1.1vw, 18px);
+  }
+
+  .home-footer-text {
+    font-size: 11px;
+    bottom: clamp(70px, 12vh, 140px);
+  }
+
+  /* ── About tablet ── */
+  .about-card {
+    width: min(85vw, 1000px);
+    height: min(54vh, 460px);
+    gap: 20px;
+    padding: 24px 28px;
+  }
+
+  .about-bottom {
+    bottom: clamp(70px, 12vh, 130px);
+    gap: clamp(16px, 2.5vw, 40px);
+  }
+
+  .about-title {
+    font-size: clamp(36px, 6vw, 90px);
+  }
+
+  /* ── Projects tablet ── */
+  .projects-container {
+    width: min(85vw, 1100px);
+    height: min(60vh, 560px);
+    padding: 32px 40px;
+    bottom: clamp(70px, 12vh, 130px);
+    /* shift up slightly from bottom-nav */
+  }
+
+  /* ── Contacts tablet ── */
+  .contact-container {
+    width: min(92vw, 720px);
+    top: 42%;
+  }
+
+  .contact-card {
+    border-radius: 36px;
+    padding: 28px 32px;
+  }
+}
+
+/* ================================================================== */
+/* MOBILE  < 768px                                                     */
+/* ================================================================== */
+@media (max-width: 767px) {
+
+  /* Allow vertical scroll on mobile */
+  html, body, #root {
+    overflow: auto;
+    height: auto;
+    min-height: 100%;
+  }
+
+  /* Show icon nav */
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    gap: 2px;
+    padding: 8px 12px;
+    background: rgba(26, 26, 26, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 56px;
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.18),
+      0 8px 32px rgba(0,0,0,0.5);
+    width: auto;
+    max-width: 92vw;
+  }
+
+  .mobile-bottom-nav__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 12px;
+    border-radius: 40px;
+    text-decoration: none;
+    transition: background 0.2s;
+    pointer-events: auto;
+  }
+
+  .mobile-bottom-nav__item.active {
+    background: rgba(255,255,255,0.15);
+  }
+
+  .mobile-bottom-nav__icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+  }
+
+  .mobile-bottom-nav__item.active .mobile-bottom-nav__icon {
+    opacity: 1;
+  }
+
+  .mobile-bottom-nav__label {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.02em;
+  }
+
+  .mobile-bottom-nav__item.active .mobile-bottom-nav__label {
+    color: #fff;
+  }
+
+  /* Hide desktop nav */
+  .bottom-nav { display: none; }
+
+  /* ── Home page — hide desktop layout, show mobile layout ── */
+  .home-desktop-layout { display: none; }
+
+  .home-mobile-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100svh;
+    padding: 64px 24px 120px;
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .home-mobile-avatar {
+    width: min(52vw, 200px);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 8px;
+    isolation: isolate;
+  }
+
+  .home-mobile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+
+  .home-mobile-name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 9vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .home-mobile-role {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(14px, 3.5vw, 20px);
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+
+  .home-mobile-tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(13px, 3.2vw, 17px);
+    line-height: 1.55;
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    max-width: 360px;
+  }
+
+  /* ── About mobile ── */
+  .about-page {
+    overflow-y: auto;
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .about-card {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    flex-direction: column;
+    padding: 20px 16px 100px;
+    border-radius: 0;
+    gap: 16px;
+    margin: 0;
+    overflow-y: auto;
+  }
+
+  .about-card__photo {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 220px;
+    border-radius: 20px;
+  }
+
+  .about-card__text {
+    flex: 1;
+    overflow-y: visible;
+  }
+
+  .about-bottom {
+    display: none;
+  }
+
+  /* ── Projects mobile ── */
+  .projects-page {
+    overflow-y: auto;
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .projects-container {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    height: auto;
+    min-height: 100svh;
+    border-radius: 0;
+    padding: 24px 20px 120px;
+  }
+
+  /* ── Contacts mobile ── */
+  .contact-container {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    padding: 24px 16px 120px;
+  }
+
+  .contact-card {
+    border-radius: 24px;
+    padding: 24px 20px;
+  }
+
+  .contact-title {
+    font-size: clamp(24px, 7vw, 40px);
+    margin-bottom: 20px;
+  }
+
+  .contact-input-wrapper {
+    height: 52px;
+  }
+
+  .contact-form-row {
+    flex-direction: column;
+  }
+
+  /* ── Resume mobile ── */
+  .resume-page {
+    overflow-y: auto;
+    height: auto;
+    min-height: 100svh;
+  }
 }
