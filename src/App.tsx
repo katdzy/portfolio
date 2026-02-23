@@ -1,13 +1,13 @@
 import { useRef } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 
-import PageTransition from './components/PageTransition';
+import PageTransition from './components/PageTransition.tsx';
 
-import Home from './pages/Home';
-import About from './pages/About';
-import Projects from './pages/Projects';
-import Resume from './pages/Resume';
-import Contacts from './pages/Contacts';
+import Home from './pages/Home.tsx';
+import About from './pages/About.tsx';
+import Projects from './pages/Projects.tsx';
+import Resume from './pages/Resume.tsx';
+import Contacts from './pages/Contacts.tsx';
 
 export default function App() {
   const location = useLocation();

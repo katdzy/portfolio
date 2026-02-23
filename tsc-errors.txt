@@ -1,0 +1,19 @@
+src/components/BottomNav.tsx(1,10): error TS1484: 'MouseEvent' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/components/VideoBackground.tsx(8,43): error TS7031: Binding element 'slug' implicitly has an 'any' type.
+src/components/VideoBackground.tsx(15,11): error TS2339: Property 'load' does not exist on type 'never'.
+src/components/VideoBackground.tsx(16,11): error TS2339: Property 'play' does not exist on type 'never'.
+src/pages/About.tsx(4,33): error TS7031: Binding element 'onNavigate' implicitly has an 'any' type.
+src/pages/About.tsx(5,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/About.tsx(5,31): error TS7006: Parameter 'path' implicitly has an 'any' type.
+src/pages/Contacts.tsx(3,36): error TS7031: Binding element 'onNavigate' implicitly has an 'any' type.
+src/pages/Contacts.tsx(4,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/Contacts.tsx(4,31): error TS7006: Parameter 'path' implicitly has an 'any' type.
+src/pages/Home.tsx(4,32): error TS7031: Binding element 'onNavigate' implicitly has an 'any' type.
+src/pages/Home.tsx(5,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/Home.tsx(5,31): error TS7006: Parameter 'path' implicitly has an 'any' type.
+src/pages/Projects.tsx(3,36): error TS7031: Binding element 'onNavigate' implicitly has an 'any' type.
+src/pages/Projects.tsx(4,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/Projects.tsx(4,31): error TS7006: Parameter 'path' implicitly has an 'any' type.
+src/pages/Resume.tsx(3,34): error TS7031: Binding element 'onNavigate' implicitly has an 'any' type.
+src/pages/Resume.tsx(4,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/Resume.tsx(4,31): error TS7006: Parameter 'path' implicitly has an 'any' type.
