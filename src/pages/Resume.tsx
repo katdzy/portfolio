@@ -3,6 +3,7 @@ import educationIcon from '../assets/resume/education.png';
 import orgsIcon from '../assets/resume/orgs.png';
 import downloadIcon from '../assets/resume/download.png';
 import karlPhoto from '../assets/resume/karl-cg.png';
+import resumePDF from '../assets/resume/Karl_Andrei_Dungca_Full-Stack_Developer_Resume.pdf?url';
 
 import type { MouseEvent } from 'react';
 
@@ -113,9 +114,8 @@ export default function Resume({ onNavigate }: PageProps) {
 
         {/* Download Resume button — bottom-right */}
         <a
-          href="/karl-resume.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
+          href={resumePDF}
+          download="Karl_Andrei_Dungca_Resume.pdf"
           className="resume-download-btn"
         >
           <img src={downloadIcon} alt="" className="resume-download-btn__icon" />

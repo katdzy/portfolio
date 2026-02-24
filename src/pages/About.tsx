@@ -4,15 +4,28 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import VideoBackground from '../components/VideoBackground.tsx';
 import profilePhoto from '../assets/images/about-karl.jpg';
 
-// Skill Logos
+// Skill Logos — Frontend
 import htmlLogo from '../assets/logos/html.png';
 import cssLogo from '../assets/logos/css.png';
 import jsLogo from '../assets/logos/js.jpg';
-import reactLogo from '../assets/logos/react.webp';
+import reactLogo from '../assets/logos/react.svg';
+import angularLogo from '../assets/logos/angular.png';
+import vueLogo from '../assets/logos/vue.png';
+import flutterLogo from '../assets/logos/flutter.png';
+
+// Skill Logos — Backend
 import nodeLogo from '../assets/logos/Nodejs.webp';
+import expressLogo from '../assets/logos/express-js.png';
+import phpLogo from '../assets/logos/php.svg';
 import mysqlLogo from '../assets/logos/mysql.png';
+import mongoLogo from '../assets/logos/mongodb.png';
+import bunLogo from '../assets/logos/bun-js.png';
+
+// Skill Logos — Tools & Dev
 import gitLogo from '../assets/logos/git_github.png';
 import figmaLogo from '../assets/logos/figma.png';
+import vscodeLogo from '../assets/logos/vs_code.png';
+import netlifyLogo from '../assets/logos/netlify.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,6 +40,7 @@ export default function About({ onNavigate }: PageProps) {
   const scrollHintRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
   const certsRef = useRef<HTMLDivElement>(null);
+  const softSkillsRef = useRef<HTMLDivElement>(null);
 
   const handleLinkClick = (e: MouseEvent<HTMLElement>, path: string) => {
     e.preventDefault();
@@ -47,7 +61,6 @@ export default function About({ onNavigate }: PageProps) {
     };
     scroller.addEventListener('scroll', handleScroll);
 
-    // Context for GSAP animations
     const ctx = gsap.context(() => {
       // Skills animation
       const skillItems = gsap.utils.toArray('.skill-item');
@@ -56,7 +69,7 @@ export default function About({ onNavigate }: PageProps) {
           y: 0,
           opacity: 1,
           duration: 0.6,
-          stagger: 0.05,
+          stagger: 0.04,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: skillsRef.current,
@@ -82,6 +95,23 @@ export default function About({ onNavigate }: PageProps) {
           },
         });
       }
+
+      // Soft skills pills animation
+      const softPills = gsap.utils.toArray('.soft-pill');
+      if (softPills.length > 0) {
+        gsap.to(softPills, {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.07,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: softSkillsRef.current,
+            scroller: scroller,
+            start: 'top 85%',
+          },
+        });
+      }
     }, scrollContainerRef);
 
     return () => {
@@ -90,21 +120,62 @@ export default function About({ onNavigate }: PageProps) {
     };
   }, []);
 
-  const skills = [
-    { name: 'HTML', logo: htmlLogo },
-    { name: 'CSS', logo: cssLogo },
-    { name: 'JavaScript', logo: jsLogo },
-    { name: 'React', logo: reactLogo },
-    { name: 'Node.js', logo: nodeLogo },
-    { name: 'MySQL', logo: mysqlLogo },
-    { name: 'Git', logo: gitLogo },
-    { name: 'Figma', logo: figmaLogo },
+  const skillCategories = [
+    {
+      label: 'Frontend',
+      skills: [
+        { name: 'HTML', logo: htmlLogo },
+        { name: 'CSS', logo: cssLogo },
+        { name: 'JavaScript', logo: jsLogo },
+        { name: 'React', logo: reactLogo },
+        { name: 'Angular', logo: angularLogo },
+        { name: 'Vue', logo: vueLogo },
+        { name: 'Flutter', logo: flutterLogo },
+      ],
+    },
+    {
+      label: 'Backend',
+      skills: [
+        { name: 'Node.js', logo: nodeLogo },
+        { name: 'Express', logo: expressLogo },
+        { name: 'PHP', logo: phpLogo },
+        { name: 'MySQL', logo: mysqlLogo },
+        { name: 'MongoDB', logo: mongoLogo },
+        { name: 'Bun', logo: bunLogo },
+      ],
+    },
+    {
+      label: 'Tools & Dev',
+      skills: [
+        { name: 'Git / GitHub', logo: gitLogo },
+        { name: 'Figma', logo: figmaLogo },
+        { name: 'VS Code', logo: vscodeLogo },
+        { name: 'Netlify', logo: netlifyLogo },
+      ],
+    },
+  ];
+
+  const softSkills = [
+    'Problem-solving',
+    'Communication',
+    'Teamwork',
+    'Adaptability',
+    'Willingness to Learn',
+  ];
+
+  const technicalAreas = [
+    'Frontend Development',
+    'Backend Development',
+    'Version Control',
+    'CRUD Operations',
+    'Data Handling & Storage',
+    'Responsive Web Design',
   ];
 
   const certifications = [
-    { title: 'Responsive Web Design', issuer: 'freeCodeCamp', year: '2023' },
-    { title: 'JavaScript Algorithms', issuer: 'freeCodeCamp', year: '2023' },
-    { title: 'Front-End Development', issuer: 'Coursera', year: '2024' },
+    { title: 'Responsive Web Design', issuer: 'freeCodeCamp', year: '2024' },
+    { title: 'Back-End Development And APIs', issuer: 'freeCodeCamp', year: '2025' },
+    { title: 'JavaScript Essentials', issuer: 'Cisco', year: '2024' },
   ];
 
   return (
@@ -117,6 +188,7 @@ export default function About({ onNavigate }: PageProps) {
           <img src={profilePhoto} alt="Karl Andrei Dungca" />
         </div>
         <div className="about-card__text" ref={scrollContainerRef}>
+
           {/* Intro Section */}
           <div className="about-section about-section--intro">
             <h3>About</h3>
@@ -134,15 +206,42 @@ export default function About({ onNavigate }: PageProps) {
             </p>
           </div>
 
-          {/* Skills Section */}
+          {/* Technical Skills Section */}
+          <div className="about-section">
+            <h3>Technical Skills</h3>
+            <div className="tech-pills">
+              {technicalAreas.map((area) => (
+                <span key={area} className="tech-pill">{area}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Technologies Section */}
           <div className="about-section" ref={skillsRef}>
-            <h3>Skills</h3>
-            <div className="skills-grid">
-              {skills.map((skill) => (
-                <div key={skill.name} className="skill-item">
-                  <img src={skill.logo} alt={`${skill.name} logo`} />
-                  <span className="skill-label">{skill.name}</span>
+            <h3>Technologies</h3>
+            <div className="skill-categories">
+              {skillCategories.map((cat) => (
+                <div key={cat.label} className="skill-category">
+                  <span className="skill-category__label">{cat.label}</span>
+                  <div className="skills-grid">
+                    {cat.skills.map((skill) => (
+                      <div key={skill.name} className="skill-item">
+                        <img src={skill.logo} alt={`${skill.name} logo`} />
+                        <span className="skill-label">{skill.name}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Soft Skills Section */}
+          <div className="about-section" ref={softSkillsRef}>
+            <h3>Soft Skills</h3>
+            <div className="soft-pills">
+              {softSkills.map((s) => (
+                <span key={s} className="soft-pill">{s}</span>
               ))}
             </div>
           </div>
@@ -171,7 +270,7 @@ export default function About({ onNavigate }: PageProps) {
         </div>
       </div>
 
-      {/* Hidden SVG filter — referenced by backdrop-filter: url(#displacementFilter) */}
+      {/* Hidden SVG filter */}
       <svg style={{ display: 'none' }}>
         <defs>
           <filter id="displacementFilter">
@@ -200,18 +299,6 @@ export default function About({ onNavigate }: PageProps) {
           <a href="/resume" onClick={(e) => handleLinkClick(e, '/resume')}>resume</a>
           <a href="/contacts" onClick={(e) => handleLinkClick(e, '/contacts')}>contact</a>
         </nav>
-
-        {/* Col 3 — Technical Skills */}
-        <div className="about-skills__col">
-          <h2>Technical Skills</h2>
-          <p>Frontend and Backend Development, Version Control, CRUD Operations, Data Handling &amp; Storage, Responsive Web Design</p>
-        </div>
-
-        {/* Col 4 — Soft Skills */}
-        <div className="about-skills__col">
-          <h2>Soft Skills</h2>
-          <p>Problem-solving, Communication, Teamwork, Adaptability, Willingness to Learn</p>
-        </div>
       </div>
     </div>
   );
