@@ -14,7 +14,7 @@ import vueLogo from '../assets/logos/vue.png';
 import flutterLogo from '../assets/logos/flutter.png';
 
 // Skill Logos — Backend
-import nodeLogo from '../assets/logos/Nodejs.webp';
+import nodeLogo from '../assets/logos/Nodejs.png';
 import expressLogo from '../assets/logos/express-js.png';
 import phpLogo from '../assets/logos/php.svg';
 import mysqlLogo from '../assets/logos/mysql.png';
@@ -22,10 +22,10 @@ import mongoLogo from '../assets/logos/mongodb.png';
 import bunLogo from '../assets/logos/bun-js.png';
 
 // Skill Logos — Tools & Dev
-import gitLogo from '../assets/logos/git_github.png';
+import gitLogo from '../assets/logos/github.png';
 import figmaLogo from '../assets/logos/figma.png';
 import vscodeLogo from '../assets/logos/vs_code.png';
-import netlifyLogo from '../assets/logos/netlify.webp';
+import netlifyLogo from '../assets/logos/netlify.png';
 
 gsap.registerPlugin(ScrollTrigger);
 

@@ -1,11 +1,11 @@
 import type { MouseEvent } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
-import homeIcon from "../assets/mobile/home-button.png";
-import aboutIcon from "../assets/mobile/about-button.png";
-import projectsIcon from "../assets/mobile/projects.png";
-import resumeIcon from "../assets/mobile/resume-button.png";
-import contactsIcon from "../assets/mobile/contacts-button.png";
+import homeIcon from "../assets/mobile/home.svg";
+import aboutIcon from "../assets/mobile/about.svg";
+import projectsIcon from "../assets/mobile/projects.svg";
+import resumeIcon from "../assets/mobile/resume.svg";
+import contactsIcon from "../assets/mobile/contacts.svg";
 
 const PAGES = [
   { path: "/", label: "Home", icon: homeIcon },
@@ -20,6 +20,9 @@ interface BottomNavProps {
 }
 
 export default function BottomNav({ onNavigate }: BottomNavProps) {
+  const location = useLocation();
+  const isProjects = location.pathname === "/projects";
+
   const handleClick = (
     e: MouseEvent<HTMLAnchorElement>,
     path: string
@@ -29,20 +32,50 @@ export default function BottomNav({ onNavigate }: BottomNavProps) {
   };
 
   return (
-    <nav className="mobile-bottom-nav" aria-label="Page navigation">
-      {PAGES.map(({ path, label, icon }) => (
-        <NavLink
-          key={path}
-          to={path}
-          className={({ isActive }) =>
-            `mobile-bottom-nav__item${isActive ? " active" : ""}`
-          }
-          onClick={(e) => handleClick(e, path)}
-        >
-          <img src={icon} alt={label} className="mobile-bottom-nav__icon" />
-          <span className="mobile-bottom-nav__label">{label}</span>
-        </NavLink>
-      ))}
-    </nav>
+    <>
+      {/* Hidden SVG filter for liquid-glass distortion */}
+      <svg style={{ display: "none" }}>
+        <defs>
+          <filter id="nav-glass-distortion">
+            <feTurbulence
+              type="turbulence"
+              baseFrequency="0.65"
+              numOctaves="3"
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="8"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+      </svg>
+
+      <nav
+        className={`mobile-bottom-nav${isProjects ? " mobile-bottom-nav--dark" : ""}`}
+        aria-label="Page navigation"
+      >
+        {PAGES.map(({ path, label, icon }) => (
+          <NavLink
+            key={path}
+            to={path}
+            className={({ isActive }) =>
+              `mobile-bottom-nav__item${isActive ? " active" : ""}`
+            }
+            onClick={(e) => handleClick(e, path)}
+            aria-label={label}
+          >
+            <img
+              src={icon}
+              alt={label}
+              className="mobile-bottom-nav__icon"
+            />
+          </NavLink>
+        ))}
+      </nav>
+    </>
   );
 }
