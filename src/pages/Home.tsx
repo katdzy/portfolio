@@ -30,8 +30,7 @@ export default function Home({ onNavigate }: PageProps) {
         <div className="home-right-col">
           <svg style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true">
             <filter id="home-glass-distortion">
-              <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="1" result="noise" />
-              <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" />
+              <feDisplacementMap in="SourceGraphic" scale="200" xChannelSelector="R" yChannelSelector="G" />
             </filter>
           </svg>
 

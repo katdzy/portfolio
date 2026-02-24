@@ -119,6 +119,7 @@ export default function About({ onNavigate }: PageProps) {
         <div className="about-card__text" ref={scrollContainerRef}>
           {/* Intro Section */}
           <div className="about-section about-section--intro">
+            <h3>About</h3>
             <p>
               In my 1st year as a Web Development Student, I learned two coding
               languages namely Python and Java. Aside from that, I also have
@@ -169,6 +170,20 @@ export default function About({ onNavigate }: PageProps) {
           </div>
         </div>
       </div>
+
+      {/* Hidden SVG filter — referenced by backdrop-filter: url(#displacementFilter) */}
+      <svg style={{ display: 'none' }}>
+        <defs>
+          <filter id="displacementFilter">
+            <feDisplacementMap
+              in="SourceGraphic"
+              scale="200"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+      </svg>
 
       {/* Bottom bar */}
       <div className="about-bottom">

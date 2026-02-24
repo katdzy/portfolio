@@ -1,9 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import VideoBackground from '../components/VideoBackground.tsx';
-
-gsap.registerPlugin(ScrollTrigger);
+import folderIcon from '../assets/projects/Folder.png';
+import inputHavenThumb from '../assets/projects/inputhaven.png';
+import sfwThumb from '../assets/projects/stud-free-wall.png';
+import acttcThumb from '../assets/projects/acttc.png';
 
 import type { MouseEvent } from 'react';
 
@@ -11,137 +10,87 @@ interface PageProps {
   onNavigate: (path: string) => void;
 }
 
-export default function Projects({ onNavigate }: PageProps) {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const introRef = useRef<HTMLDivElement>(null);
-  const projectsRef = useRef<HTMLDivElement>(null);
+const projects = [
+  {
+    id: 1,
+    title: 'input haven_',
+    thumb: inputHavenThumb,
+    techStack: ['PHP', 'MySQL'],
+    link: 'https://github.com',
+  },
+  {
+    id: 2,
+    title: 'Student Freedom Wall',
+    thumb: sfwThumb,
+    techStack: ['MongoDB', 'Vue', 'Express'],
+    link: 'https://github.com',
+  },
+  {
+    id: 3,
+    title: 'Angeles City Table Tennis Club',
+    thumb: acttcThumb,
+    techStack: ['WordPress'],
+    link: 'https://github.com',
+  },
+];
 
+export default function Projects({ onNavigate }: PageProps) {
   const handleLinkClick = (e: MouseEvent<HTMLElement>, path: string) => {
     e.preventDefault();
     onNavigate(path);
   };
 
-  useEffect(() => {
-    const scroller = scrollContainerRef.current;
-    if (!scroller) return;
-
-    const ctx = gsap.context(() => {
-      // Intro animation
-      if (introRef.current) {
-        gsap.from(introRef.current, {
-          y: 40,
-          opacity: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-        });
-      }
-
-      // Project Cards stagger animation on scroll
-      const cards = gsap.utils.toArray('.project-card');
-      if (cards.length > 0) {
-        gsap.to(cards, {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: projectsRef.current,
-            scroller: scroller,
-            start: 'top 85%',
-          },
-        });
-      }
-    }, scrollContainerRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  const featuredProjects = [
-    {
-      id: 1,
-      title: 'E-Commerce Dashboard',
-      description:
-        'A comprehensive analytics dashboard for online retailers. Focuses on transforming complex sales data into actionable, easy-to-read metrics with minimal latency.',
-      techStack: ['React', 'TypeScript', 'Tailwind', 'Recharts'],
-      features: [
-        'Real-time data visualization',
-        'Optimized data fetching with React Query',
-        'Accessible, high-contrast UI components',
-      ],
-      liveLink: '#',
-      githubLink: '#',
-    },
-    {
-      id: 2,
-      title: 'Healthcare Booking Platform',
-      description:
-        'A secure, streamlined scheduling application connecting patients with healthcare providers, prioritizing a frictionless user experience and data privacy.',
-      techStack: ['Next.js', 'Node.js', 'PostgreSQL', 'Prisma'],
-      features: [
-        'Role-based access control (RBAC)',
-        'Complex timezone-aware calendar integration',
-        'End-to-end type safety',
-      ],
-      liveLink: '#',
-      githubLink: '#',
-    },
-    {
-      id: 3,
-      title: 'Interactive WebGL Experience',
-      description:
-        'An immersive marketing site for a boutique agency. Leverages advanced 3D rendering directly in the browser to create a memorable brand interaction.',
-      techStack: ['Three.js', 'React Three Fiber', 'GSAP'],
-      features: [
-        'Custom shader implementation',
-        'Scroll-tied cinematic camera animations',
-        'Performance optimized for mobile devices',
-      ],
-      liveLink: '#',
-      githubLink: '#',
-    },
-  ];
-
   return (
-    <div className="about-page">
+    <div className="projects-page">
       <VideoBackground slug="projects" />
 
-      {/* Content Container */}
-      <div className="projects-container" ref={scrollContainerRef}>
-        {/* Intro */}
-        <div className="projects-intro" ref={introRef}>
-          <h2>Building digital experiences<br />with purpose.</h2>
-          <p>
-            A selection of my recent work focusing on scalable architecture,
-            fluid motion design, and user-centric interfaces.
-          </p>
+      {/* Hidden SVG displacement filter — same as About page */}
+      <svg style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true">
+        <filter id="projects-glass-distortion">
+          <feDisplacementMap
+            in="SourceGraphic"
+            scale="200"
+            xChannelSelector="R"
+            yChannelSelector="G"
+          />
+        </filter>
+      </svg>
+
+      {/* Centre column: folder header + cards */}
+      <div className="projects-layout">
+
+        {/* Folder header bar */}
+        <div className="projects-folder-bar">
+          <img src={folderIcon} alt="Folder" className="projects-folder-icon" />
+          <span className="projects-folder-title">Karl's Folder</span>
         </div>
 
-        {/* Featured Projects */}
-        <div className="projects-list" ref={projectsRef}>
-          {featuredProjects.map((project) => (
-            <div key={project.id} className="project-card">
-              <h3 className="project-title">{project.title}</h3>
-              <p className="project-desc">{project.description}</p>
-
-              <div className="project-tech">
-                {project.techStack.map((tech, i) => (
-                  <span key={i}>{tech}</span>
-                ))}
+        {/* Project cards */}
+        <div className="projects-cards-row">
+          {projects.map((project) => (
+            <div key={project.id} className="proj-card">
+              {/* Thumbnail */}
+              <div className="proj-card__thumb">
+                <img src={project.thumb} alt={project.title} />
               </div>
 
-              <ul className="project-features">
-                {project.features.map((feature, i) => (
-                  <li key={i}>{feature}</li>
-                ))}
-              </ul>
+              {/* Info section */}
+              <div className="proj-card__info">
+                <p className="proj-card__title">{project.title}</p>
 
-              <div className="project-links">
-                <a href={project.liveLink} className="project-link" target="_blank" rel="noreferrer">
-                  Live Site
-                </a>
-                <a href={project.githubLink} className="project-link" target="_blank" rel="noreferrer">
-                  GitHub
+                <div className="proj-card__tags">
+                  {project.techStack.map((tech) => (
+                    <span key={tech} className="proj-card__tag">{tech}</span>
+                  ))}
+                </div>
+
+                <a
+                  href={project.link}
+                  className="proj-card__link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  view project
                 </a>
               </div>
             </div>
@@ -149,20 +98,23 @@ export default function Projects({ onNavigate }: PageProps) {
         </div>
       </div>
 
-      {/* Bottom bar */}
+      {/* Bottom bar — reuses about-page patterns */}
       <div className="about-bottom">
-        {/* Col 1 — identity */}
         <div className="about-identity">
-          <span className="about-role clickable" style={{ color: '#fff' }} onClick={(e) => handleLinkClick(e, '/')}>Karl Andrei Dungca</span>
-          <h1 className="about-title" style={{ color: '#fff' }}>projects</h1>
+          <span
+            className="about-role clickable"
+            onClick={(e) => handleLinkClick(e, '/')}
+          >
+            Karl Andrei Dungca
+          </span>
+          <h1 className="about-title">projects</h1>
         </div>
 
-        {/* Col 2 — nav links */}
         <nav className="about-subnav" aria-label="Secondary navigation">
-          <a href="/about" style={{ color: '#fff' }} onClick={(e) => handleLinkClick(e, '/about')}>about</a>
-          <a href="/projects" style={{ color: '#fff' }} onClick={(e) => handleLinkClick(e, '/projects')}>projects</a>
-          <a href="/resume" style={{ color: '#fff' }} onClick={(e) => handleLinkClick(e, '/resume')}>resume</a>
-          <a href="/contacts" style={{ color: '#fff' }} onClick={(e) => handleLinkClick(e, '/contacts')}>contact</a>
+          <a href="/about" onClick={(e) => handleLinkClick(e, '/about')}>about</a>
+          <a href="/projects" onClick={(e) => handleLinkClick(e, '/projects')}>projects</a>
+          <a href="/resume" onClick={(e) => handleLinkClick(e, '/resume')}>resume</a>
+          <a href="/contacts" onClick={(e) => handleLinkClick(e, '/contacts')}>contact</a>
         </nav>
       </div>
     </div>
