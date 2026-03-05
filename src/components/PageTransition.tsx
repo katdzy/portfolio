@@ -20,13 +20,13 @@ const PAGE_ORDER = ["/", "/about", "/projects", "/resume", "/contacts"] as const
  */
 const TRANSITION_VIDEOS: Record<string, string> = {
   "0-1":
-    "https://res.cloudinary.com/dlrz42ibj/video/upload/q_auto,f_auto,vc_auto,w_1280,br_2000k/home-about_gpba4n.mp4",
+    "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772683376/home-about_eirjg4.webm",
   "1-2":
-    "https://res.cloudinary.com/dlrz42ibj/video/upload/q_auto,f_auto,vc_auto,w_1280,br_2000k/about-projects_wspwbx.mp4",
+    "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772683378/about-projects_oumqc2.webm",
   "2-3":
-    "https://res.cloudinary.com/dlrz42ibj/video/upload/q_auto,f_auto,vc_auto,w_1280,br_2000k/projects-resume_kwuqmy.mp4",
+    "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772683378/projects-resume_yxjyyg.webm",
   "3-4":
-    "https://res.cloudinary.com/dlrz42ibj/video/upload/q_auto,f_auto,vc_auto,w_1280,br_2000k/resume-contacts_tr0rhz.mp4",
+    "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772683379/resume-contacts_qrw8gi.webm",
 };
 
 const FADE_DURATION = 0.25; // seconds

@@ -6,15 +6,15 @@ interface VideoBackgroundProps {
 
 const LOOPED_VIDEOS: Record<string, string> = {
   home:
-    "https://res.cloudinary.com/dlrz42ibj/video/upload/q_auto:low,f_auto,vc_auto,w_1280,br_1200k/home_vo7ze3.mp4",
+    "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772682227/home_kabsui.webm",
   about:
-    "https://res.cloudinary.com/dlrz42ibj/video/upload/q_auto:low,f_auto,vc_auto,w_1280,br_1200k/about_wsdwep.mp4",
+    "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772682227/about_znuuri.webm",
   projects:
-    "https://res.cloudinary.com/dlrz42ibj/video/upload/q_auto:low,f_auto,vc_auto,w_1280,br_1200k/projects_clwcqi.mp4",
+    "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772682227/projects_sb0vw4.webm",
   resume:
-    "https://res.cloudinary.com/dlrz42ibj/video/upload/q_auto:low,f_auto,vc_auto,w_1280,br_1200k/resume_h026oh.mp4",
+    "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772682228/resume_uir01z.webm",
   contacts:
-    "https://res.cloudinary.com/dlrz42ibj/video/upload/q_auto:low,f_auto,vc_auto,w_1280,br_1200k/contacts_gmswla.mp4",
+    "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772682227/contacts_sdnji7.webm",
 };
 
 export default function VideoBackground({ slug }: VideoBackgroundProps) {
