@@ -442,8 +442,16 @@ body,
   display: block;
 }
 
-.about-card__text {
+/* Wrapper — gives gradient + hint a scoped positioning context */
+.about-card__text-wrap {
   flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.about-card__text {
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -454,15 +462,13 @@ body,
   -ms-overflow-style: none;
   /* IE and Edge */
   padding-bottom: 24px;
-  /* Space at bottom of scroll */
-  position: relative;
-  /* For scroll hint positioning if needed */
 }
 
 .about-card__text::-webkit-scrollbar {
   display: none;
   /* Chrome, Safari and Opera */
 }
+
 
 /* -------------------------------------------------- */
 /* About Page - Scrollable Sections                   */
@@ -639,7 +645,7 @@ body,
 /* Scroll Hint Marker */
 .scroll-hint {
   position: absolute;
-  bottom: 16px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -647,7 +653,6 @@ body,
   align-items: center;
   gap: 4px;
   pointer-events: none;
-  /* Let clicks pass through to text */
   opacity: 1;
   /* Managed by GSAP */
 }
@@ -888,6 +893,13 @@ body,
   filter: drop-shadow(-8px -10px 46px rgba(0, 0, 0, 0.37));
   backdrop-filter: brightness(1.1) blur(2px) url(#projects-glass-distortion);
   -webkit-backdrop-filter: brightness(1.1) blur(2px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.proj-card:hover {
+  transform: translateY(-8px);
+  filter: drop-shadow(-8px -4px 50px rgba(0, 0, 0, 0.6));
 }
 
 .proj-card::before {
@@ -916,15 +928,20 @@ body,
   object-fit: cover;
   object-position: top center;
   display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Info section — gradient dark bg like Figma */
+.proj-card:hover .proj-card__thumb img {
+  transform: scale(1.06);
+}
+
+/* Info section — light theme gradient */
 .proj-card__info {
   display: flex;
   flex-direction: column;
-  gap: clamp(6px, 0.8vh, 10px);
-  padding: clamp(12px, 1.4vw, 20px) clamp(12px, 1.4vw, 20px);
-  background: linear-gradient(to bottom, #000 0%, #696969 100%);
+  gap: clamp(8px, 1vh, 12px);
+  padding: clamp(16px, 1.8vw, 26px) clamp(16px, 1.8vw, 24px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 245, 245, 1) 100%);
   position: relative;
   z-index: 2;
   flex: 1;
@@ -933,8 +950,8 @@ body,
 .proj-card__title {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: clamp(13px, 1.2vw, 20px);
-  color: #fff;
+  font-size: clamp(15px, 1.4vw, 22px);
+  color: #111;
   letter-spacing: -0.03em;
   line-height: 1.2;
   margin: 0;
@@ -944,35 +961,37 @@ body,
 .proj-card__tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
 }
 
 .proj-card__tag {
   font-family: 'Inter', sans-serif;
   font-weight: 500;
-  font-size: clamp(10px, 0.85vw, 15px);
-  color: #fff;
-  background: #000;
-  border-radius: 20px;
-  padding: 3px 10px;
+  font-size: clamp(10px, 0.85vw, 14px);
+  color: #333;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 24px;
+  padding: 4px 12px;
   white-space: nowrap;
 }
 
 /* View project link */
 .proj-card__link {
   font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  font-size: clamp(11px, 0.9vw, 16px);
-  color: #fff;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  align-self: center;
-  transition: opacity 0.2s;
+  font-weight: 600;
+  font-size: clamp(12px, 1vw, 16px);
+  color: #000;
+  text-decoration: none;
+  align-self: flex-start;
+  transition: opacity 0.2s, transform 0.2s;
   margin-top: auto;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 2px;
 }
 
 .proj-card__link:hover {
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 /* -------------------------------------------------- */

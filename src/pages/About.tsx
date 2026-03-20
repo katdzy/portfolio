@@ -187,77 +187,81 @@ export default function About({ onNavigate }: PageProps) {
         <div className="about-card__photo">
           <img src={profilePhoto} alt="Karl Andrei Dungca" />
         </div>
-        <div className="about-card__text" ref={scrollContainerRef}>
+        {/* Wrapper gives a clean positioning context for the gradient + hint */}
+        <div className="about-card__text-wrap">
+          <div className="about-card__text" ref={scrollContainerRef}>
 
-          {/* Intro Section */}
-          <div className="about-section about-section--intro">
-            <h3>About</h3>
-            <p>
-              In my 1st year as a Web Development Student, I learned two coding
-              languages namely Python and Java. Aside from that, I also have
-              experience in creating websites using no-code platforms such as
-              Wordpress and Google Sites.
-            </p>
-            <p>
-              Currently a 3rd Year IT Web Development Student and I help
-              re-envision your projects with the power of aesthetics and layouts.
-              So far, I have learned HTML, CSS, Javascript, PHP, and MySQL and I
-              have recently deployed a couple of websites.
-            </p>
-          </div>
-
-          {/* Technical Skills Section */}
-          <div className="about-section">
-            <h3>Technical Skills</h3>
-            <div className="tech-pills">
-              {technicalAreas.map((area) => (
-                <span key={area} className="tech-pill">{area}</span>
-              ))}
+            {/* Intro Section */}
+            <div className="about-section about-section--intro">
+              <h3>Myself</h3>
+              <p>
+                In my 1st year as a Web Development Student, I learned two coding
+                languages namely Python and Java. Aside from that, I also have
+                experience in creating websites using no-code platforms such as
+                Wordpress and Google Sites.
+              </p>
+              <p>
+                Currently a 3rd Year IT Web Development Student and I help
+                re-envision your projects with the power of aesthetics and layouts.
+                So far, I have learned HTML, CSS, Javascript, PHP, and MySQL and I
+                have recently deployed a couple of websites.
+              </p>
             </div>
-          </div>
 
-          {/* Technologies Section */}
-          <div className="about-section" ref={skillsRef}>
-            <h3>Technologies</h3>
-            <div className="skill-categories">
-              {skillCategories.map((cat) => (
-                <div key={cat.label} className="skill-category">
-                  <span className="skill-category__label">{cat.label}</span>
-                  <div className="skills-grid">
-                    {cat.skills.map((skill) => (
-                      <div key={skill.name} className="skill-item">
-                        <img src={skill.logo} alt={`${skill.name} logo`} />
-                        <span className="skill-label">{skill.name}</span>
-                      </div>
-                    ))}
+            {/* Technical Skills Section */}
+            <div className="about-section">
+              <h3>Technical Skills</h3>
+              <div className="tech-pills">
+                {technicalAreas.map((area) => (
+                  <span key={area} className="tech-pill">{area}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Technologies Section */}
+            <div className="about-section" ref={skillsRef}>
+              <h3>Technologies</h3>
+              <div className="skill-categories">
+                {skillCategories.map((cat) => (
+                  <div key={cat.label} className="skill-category">
+                    <span className="skill-category__label">{cat.label}</span>
+                    <div className="skills-grid">
+                      {cat.skills.map((skill) => (
+                        <div key={skill.name} className="skill-item">
+                          <img src={skill.logo} alt={`${skill.name} logo`} />
+                          <span className="skill-label">{skill.name}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Soft Skills Section */}
-          <div className="about-section" ref={softSkillsRef}>
-            <h3>Soft Skills</h3>
-            <div className="soft-pills">
-              {softSkills.map((s) => (
-                <span key={s} className="soft-pill">{s}</span>
-              ))}
+            {/* Soft Skills Section */}
+            <div className="about-section" ref={softSkillsRef}>
+              <h3>Soft Skills</h3>
+              <div className="soft-pills">
+                {softSkills.map((s) => (
+                  <span key={s} className="soft-pill">{s}</span>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Certifications Section */}
-          <div className="about-section" ref={certsRef}>
-            <h3>Certifications</h3>
-            <div className="cert-list">
-              {certifications.map((cert, i) => (
-                <div key={i} className="cert-card">
-                  <span className="cert-title">{cert.title}</span>
-                  <span className="cert-issuer">{cert.issuer}</span>
-                  <span className="cert-year">{cert.year}</span>
-                </div>
-              ))}
+            {/* Certifications Section */}
+            <div className="about-section" ref={certsRef}>
+              <h3>Certifications</h3>
+              <div className="cert-list">
+                {certifications.map((cert, i) => (
+                  <div key={i} className="cert-card">
+                    <span className="cert-title">{cert.title}</span>
+                    <span className="cert-issuer">{cert.issuer}</span>
+                    <span className="cert-year">{cert.year}</span>
+                  </div>
+                ))}
+              </div>
             </div>
+
           </div>
 
           {/* Scroll Hint */}
