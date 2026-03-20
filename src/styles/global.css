@@ -644,16 +644,14 @@ body,
 
 /* Scroll Hint Marker */
 .scroll-hint {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  align-self: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
   pointer-events: none;
   opacity: 1;
+  margin-bottom: -24px; /* cancel the parent flex gap */
   /* Managed by GSAP */
 }
 
