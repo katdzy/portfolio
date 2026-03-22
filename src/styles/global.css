@@ -816,8 +816,9 @@ body,
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -54%);
+  transform: translate(-50%, -55%);
   width: min(82vw, 1320px);
+  max-height: 62vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -870,8 +871,40 @@ body,
   white-space: nowrap;
 }
 
-/* ── Cards row ── */
-.projects-cards-row {
+/* ── Cards Area (Scrollable Vertical) ── */
+.projects-cards-area {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 80px;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+.projects-cards-area::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Project Scroll Hint Overlay ── */
+.proj-scroll-hint {
+  margin-bottom: -12px;
+}
+.proj-scroll-hint span {
+  color: rgba(0, 0, 0, 0.65);
+  font-weight: 500;
+}
+.proj-scroll-hint svg {
+  fill: rgba(0, 0, 0, 0.65);
+}
+
+/* ── Cards Grid ── */
+.projects-cards-grid {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -888,7 +921,7 @@ body,
   flex-direction: column;
 
   /* Liquid-glass effect */
-  filter: drop-shadow(-8px -10px 46px rgba(0, 0, 0, 0.37));
+  filter: drop-shadow(0px 10px 30px rgba(0, 0, 0, 0.15));
   backdrop-filter: brightness(1.1) blur(2px) url(#projects-glass-distortion);
   -webkit-backdrop-filter: brightness(1.1) blur(2px);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -897,7 +930,7 @@ body,
 
 .proj-card:hover {
   transform: translateY(-8px);
-  filter: drop-shadow(-8px -4px 50px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0px 14px 40px rgba(0, 0, 0, 0.25));
 }
 
 .proj-card::before {
@@ -2310,6 +2343,7 @@ body,
     padding: 0;
     gap: 12px;
     align-items: stretch;
+    max-height: none;
   }
 
   .projects-folder-bar {
@@ -2327,9 +2361,14 @@ body,
     white-space: nowrap;
   }
 
-  .projects-cards-row {
+  .projects-cards-grid {
     grid-template-columns: 1fr;
     gap: 14px;
+    padding-bottom: 24px;
+  }
+  
+  .projects-cards-area {
+    padding-bottom: 0;
   }
 
   .proj-card__thumb {

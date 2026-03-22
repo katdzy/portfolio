@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import VideoBackground from '../components/VideoBackground.tsx';
 import folderIcon from '../assets/projects/Folder.png';
 import inputHavenThumb from '../assets/projects/inputhaven.png';
 import sfwThumb from '../assets/projects/stud-free-wall.png';
 import acttcThumb from '../assets/projects/acttc.png';
+import swtchThumb from '../assets/projects/swtch_thumb.png';
+import boardwalkThumb from '../assets/projects/theboardwalk.png';
 
 import type { MouseEvent } from 'react';
 
@@ -53,10 +55,47 @@ const projects: Project[] = [
     demo: 'https://actabletennisclub.pro/',
     source: null,
   },
+  {
+    id: 4,
+    title: 'SWTCH',
+    thumb: swtchThumb,
+    techStack: ['HTML', 'CSS', 'JavaScript'],
+    description:
+      'My first website project, SWTCH is an e-commerce platform showcasing computer peripherals such as mice, keyboards, and desk essentials. It features a vibrant and playful design, with products categorized based on user needs—whether for office work, gaming, or ergonomic comfort—making it easier for users to find suitable items.',
+    demo: 'https://katdzy.github.io/SWTCH_KeysShop/',
+    source: null,
+  },
+  {
+    id: 5,
+    title: 'The Boardwalk',
+    thumb: boardwalkThumb,
+    techStack: ['WordPress'],
+    description:
+      'The Boardwalk is a blog focused on keyboard building, where we share guides, tips, and discussions on how to create a high-quality custom keyboard. It serves as a resource for both beginners and enthusiasts interested in the mechanical keyboard hobby.',
+    demo: 'https://theboardwalk85.wordpress.com/',
+    source: null,
+  },
 ];
 
 export default function Projects({ onNavigate }: PageProps) {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollHintRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const scroller = scrollRef.current;
+    if (!scroller) return;
+
+    const handleScroll = () => {
+      if (scroller.scrollTop > 20 && scrollHintRef.current) {
+        gsap.to(scrollHintRef.current, { opacity: 0, duration: 0.3 });
+      } else if (scroller.scrollTop <= 20 && scrollHintRef.current) {
+        gsap.to(scrollHintRef.current, { opacity: 1, duration: 0.3 });
+      }
+    };
+    scroller.addEventListener('scroll', handleScroll);
+    return () => scroller.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleLinkClick = (e: MouseEvent<HTMLElement>, path: string) => {
     e.preventDefault();
@@ -126,15 +165,24 @@ export default function Projects({ onNavigate }: PageProps) {
           <span className="projects-folder-title">Karl's Folder</span>
         </div>
 
-        {/* Project cards */}
-        <div className="projects-cards-row">
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="proj-card"
-              onClick={() => openModal(project)}
-              style={{ cursor: 'pointer' }}
-            >
+        {/* Project cards scroll area */}
+        <div className="projects-cards-area" ref={scrollRef}>
+          {/* Scroll Hint */}
+          <div className="scroll-hint proj-scroll-hint" ref={scrollHintRef}>
+            <span>Scroll for more</span>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.41 8.59L12 13.17L16.59 8.59L18 10L12 16L6 10L7.41 8.59Z" />
+            </svg>
+          </div>
+
+          <div className="projects-cards-grid">
+            {projects.map((project) => (
+              <div
+                key={project.id}
+                className="proj-card"
+                onClick={() => openModal(project)}
+                style={{ cursor: 'pointer' }}
+              >
               {/* Thumbnail */}
               <div className="proj-card__thumb">
                 <img src={project.thumb} alt={project.title} />
@@ -154,6 +202,7 @@ export default function Projects({ onNavigate }: PageProps) {
               </div>
             </div>
           ))}
+          </div>
         </div>
       </div>
 
