@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import VideoBackground from '../components/VideoBackground.tsx';
+
 import profilePhoto from '../assets/images/about-karl.jpg';
 
 // Skill Logos — Frontend
@@ -181,8 +181,6 @@ export default function About({ onNavigate }: PageProps) {
   return (
     <>
       <div className="about-page">
-        <VideoBackground slug="about" />
-
         {/* Glassmorphism bio card */}
         <div className="about-card">
           <div className="about-card__photo">

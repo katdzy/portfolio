@@ -5,6 +5,12 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>karl-portfolio</title>
+
+    <!-- Warm up the Cloudinary connection before any video element asks for it.
+         preconnect = DNS + TCP + TLS in parallel with HTML parse.
+         This eliminates ~200-400ms of cold-connection overhead on first video. -->
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+    <link rel="dns-prefetch" href="https://res.cloudinary.com" />
   </head>
   <body>
     <div id="root"></div>

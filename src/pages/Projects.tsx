@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import VideoBackground from '../components/VideoBackground.tsx';
+
 import folderIcon from '../assets/projects/Folder.png';
 import inputHavenThumb from '../assets/projects/inputhaven.png';
 import sfwThumb from '../assets/projects/stud-free-wall.png';
@@ -148,8 +148,6 @@ export default function Projects({ onNavigate }: PageProps) {
 
   return (
     <div className="projects-page">
-      <VideoBackground slug="projects" />
-
       {/* Hidden SVG displacement filter */}
       <svg style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true">
         <filter id="projects-glass-distortion">

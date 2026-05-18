@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import VideoBackground from '../components/VideoBackground.tsx';
+
 
 import linkedinIcon from '../assets/contacts/linkedin.svg';
 import githubIcon from '../assets/contacts/github.svg';
@@ -72,8 +72,6 @@ export default function Contacts({ onNavigate }: PageProps) {
 
   return (
     <div className="contact-page">
-      <VideoBackground slug="contacts" />
-
       {/* Hidden SVG displacement filter */}
       <svg style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true">
         <filter id="contact-glass-distortion">

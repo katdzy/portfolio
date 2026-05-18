@@ -19,19 +19,16 @@ const PAGE_ORDER = ["/", "/about", "/projects", "/resume", "/contacts"] as const
  * Only forward sequential pairs have transition videos.
  */
 const TRANSITION_VIDEOS: Record<string, string> = {
-  "0-1":
-    "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772683376/home-about_eirjg4.webm",
-  "1-2":
-    "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772683378/about-projects_oumqc2.webm",
-  "2-3":
-    "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772683378/projects-resume_yxjyyg.webm",
-  "3-4":
-    "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772683379/resume-contacts_qrw8gi.webm",
+  "0-1": "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772683376/home-about_eirjg4.webm",
+  "1-2": "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772683378/about-projects_oumqc2.webm",
+  "2-3": "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772683378/projects-resume_yxjyyg.webm",
+  "3-4": "https://res.cloudinary.com/dlrz42ibj/video/upload/v1772683379/resume-contacts_qrw8gi.webm",
 };
+
+const TRANSITION_KEYS = Object.keys(TRANSITION_VIDEOS);
 
 const FADE_DURATION = 0.25; // seconds
 
-// 👇 What the parent component can call via ref
 export interface PageTransitionHandle {
   navigate: (to: string, from: string) => void;
 }
@@ -41,7 +38,8 @@ const PageTransition = forwardRef<PageTransitionHandle, {}>(function PageTransit
   ref
 ) {
   const overlayRef = useRef<HTMLDivElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  // Map of pairKey → <video> element, all pre-buffered
+  const videoRefs = useRef<Map<string, HTMLVideoElement>>(new Map());
   const isTransitioning = useRef<boolean>(false);
   const navigate = useNavigate();
 
@@ -51,12 +49,12 @@ const PageTransition = forwardRef<PageTransitionHandle, {}>(function PageTransit
       if (to === from) return;
 
       const fromIdx = PAGE_ORDER.indexOf(from as any);
-      const toIdx = PAGE_ORDER.indexOf(to as any);
+      const toIdx   = PAGE_ORDER.indexOf(to as any);
       const pairKey = `${fromIdx}-${toIdx}`;
-      const transitionSrc = TRANSITION_VIDEOS[pairKey] ?? null;
+      const hasVideo = TRANSITION_KEYS.includes(pairKey);
 
-      if (transitionSrc) {
-        runVideoTransition(to, transitionSrc);
+      if (hasVideo) {
+        runVideoTransition(to, pairKey);
       } else {
         runFadeTransition(to);
       }
@@ -65,7 +63,6 @@ const PageTransition = forwardRef<PageTransitionHandle, {}>(function PageTransit
 
   /**
    * Shared finish: navigate → fade overlay out → unlock.
-   * Called from both video-ended and error paths.
    */
   const finish = useCallback(
     (overlay: HTMLDivElement, to: string) => {
@@ -83,40 +80,46 @@ const PageTransition = forwardRef<PageTransitionHandle, {}>(function PageTransit
   );
 
   const runVideoTransition = useCallback(
-    (to: string, src: string) => {
+    (to: string, pairKey: string) => {
       const overlay = overlayRef.current;
-      const video = videoRef.current;
-      if (!overlay || !video) return;
+      const video   = videoRefs.current.get(pairKey);
+      if (!overlay) return;
 
       isTransitioning.current = true;
 
-      video.pause();
-      video.src = src;
-      video.load();
+      // Hide all transition videos; reveal only the active one imperatively
+      videoRefs.current.forEach((v) => {
+        v.style.opacity = "0";
+      });
 
       gsap.to(overlay, {
         opacity: 1,
         duration: 0.15,
         ease: "none",
         onComplete: () => {
+          if (!video) {
+            // No video found — shouldn't happen, but fall back gracefully
+            finish(overlay, to);
+            return;
+          }
+
+          // Show the active transition video
+          video.style.opacity = "1";
+          // Seek to start so repeated nav plays from the top
+          video.currentTime = 0;
+
           const cleanup = () => {
             video.removeEventListener("ended", onEnded);
             video.removeEventListener("error", onError);
           };
 
-          const onEnded = () => {
-            cleanup();
-            finish(overlay, to);
-          };
-
-          const onError = () => {
-            cleanup();
-            finish(overlay, to);
-          };
+          const onEnded = () => { cleanup(); finish(overlay, to); };
+          const onError = () => { cleanup(); finish(overlay, to); };
 
           video.addEventListener("ended", onEnded);
           video.addEventListener("error", onError);
 
+          // Video is already buffered → play() fires in < 1 frame
           video.play().catch(() => {
             cleanup();
             finish(overlay, to);
@@ -133,13 +136,6 @@ const PageTransition = forwardRef<PageTransitionHandle, {}>(function PageTransit
       if (!overlay) return;
 
       isTransitioning.current = true;
-
-      const video = videoRef.current;
-      if (video) {
-        video.pause();
-        video.removeAttribute("src");
-        video.load();
-      }
 
       gsap.to(overlay, {
         opacity: 1,
@@ -159,12 +155,32 @@ const PageTransition = forwardRef<PageTransitionHandle, {}>(function PageTransit
       ref={overlayRef}
       aria-hidden="true"
     >
-      <video
-        ref={videoRef}
-        muted
-        playsInline
-        preload="none"
-      />
+      {TRANSITION_KEYS.map((pairKey) => (
+        <video
+          key={pairKey}
+          ref={(el) => {
+            if (el) videoRefs.current.set(pairKey, el);
+            else videoRefs.current.delete(pairKey);
+          }}
+          muted
+          playsInline
+          // preload=auto: all transition clips are fetched immediately on app
+          // mount and sit buffered in memory. play() at transition time has
+          // zero network latency — the video starts in < 1 frame.
+          preload="auto"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+            opacity: 0,
+          }}
+        >
+          <source src={TRANSITION_VIDEOS[pairKey]} type="video/webm" />
+        </video>
+      ))}
     </div>
   );
 });

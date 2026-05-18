@@ -1,4 +1,4 @@
-import VideoBackground from '../components/VideoBackground.tsx';
+
 import profilePhoto from '../assets/home/karl-hero.png';
 import featuredThumb from '../assets/home/inputhavenfeat.png';
 import githubIcon from '../assets/home/github-viewproject.png';
@@ -17,8 +17,6 @@ export default function Home({ onNavigate }: PageProps) {
 
   return (
     <div className="home-page">
-      <VideoBackground slug="home" />
-
       {/* ── Desktop layout (hidden on mobile via CSS) ── */}
       <div className="home-desktop-layout">
         {/* Profile photo — bottom-left */}

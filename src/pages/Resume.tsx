@@ -1,4 +1,4 @@
-import VideoBackground from '../components/VideoBackground.tsx';
+
 import educationIcon from '../assets/resume/education.png';
 import orgsIcon from '../assets/resume/orgs.png';
 import downloadIcon from '../assets/resume/download.png';
@@ -19,8 +19,6 @@ export default function Resume({ onNavigate }: PageProps) {
 
   return (
     <div className="resume-page">
-      <VideoBackground slug="resume" />
-
       {/* Hidden SVG displacement filter */}
       <svg style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true">
         <filter id="resume-glass-distortion">
