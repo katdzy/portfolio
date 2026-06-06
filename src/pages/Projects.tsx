@@ -7,6 +7,7 @@ import sfwThumb from '../assets/projects/stud-free-wall.png';
 import acttcThumb from '../assets/projects/acttc.png';
 import swtchThumb from '../assets/projects/swtch_thumb.png';
 import boardwalkThumb from '../assets/projects/theboardwalk.png';
+import weKanThumb from '../assets/projects/we-kan.png';
 
 import type { MouseEvent } from 'react';
 
@@ -74,6 +75,16 @@ const projects: Project[] = [
       'The Boardwalk is a blog focused on keyboard building, where we share guides, tips, and discussions on how to create a high-quality custom keyboard. It serves as a resource for both beginners and enthusiasts interested in the mechanical keyboard hobby.',
     demo: 'https://theboardwalk85.wordpress.com/',
     source: null,
+  },
+  {
+    id: 6,
+    title: 'We-Kan',
+    thumb: weKanThumb,
+    techStack: ['Angular', 'PostgreSQL', 'WebSocket'],
+    description:
+      'We-Kan is a web-based Kanban tool that helps individuals and teams organize, track, and manage tasks through a simple and intuitive visual workflow. It features drag-and-drop task management, activity logging, and real-time project tracking.',
+    demo: 'https://we-kan.netlify.app/',
+    source: 'https://github.com/katdzy/We-Kan',
   },
 ];
 

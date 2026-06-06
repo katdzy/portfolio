@@ -1140,6 +1140,13 @@ body,
   gap: 6px;
 }
 
+/* Override tag colours for the dark modal context */
+.proj-modal__tags .proj-card__tag {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
 /* Description */
 .proj-modal__desc {
   font-family: 'Inter', sans-serif;
